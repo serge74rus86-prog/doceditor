@@ -1,0 +1,109 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <OutputType>Library</OutputType>
+    <RootNamespace>PilotMarkdownModule</RootNamespace>
+    <AssemblyName>PilotMarkdownModule.ext2</AssemblyName>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultPageItems>false</EnableDefaultPageItems>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
+    <BaseOutputPath>D:\PilotCache\Pilot-ICE Enterprise\Development\PilotMarkdownModule</BaseOutputPath>
+  </PropertyGroup>
+
+  <!-- Автоматическое увеличение номера сборки -->
+  <Target Name="IncrementBuildNumber" BeforeTargets="BeforeBuild">
+    <Exec Command="powershell -ExecutionPolicy Bypass -File &quot;$(MSBuildThisFileDirectory)build\increment_version.ps1&quot;" />
+  </Target>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>D:\PilotCache\Pilot-ICE Enterprise\Development\PilotMarkdownModule\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ascon.Pilot.SDK" Version="26.1.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Markdig" Version="0.45.0" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3800.47" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.ComponentModel.Composition" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Extension.cs" />
+    <Compile Include="ExtensionEventAggregator.cs" />
+    <Compile Include="ObjectAttributesMenuPlugin.cs" />
+    <Compile Include="CreateMarkdownFileMenuPlugin.cs" />
+    <Compile Include="MarkdownDetailsViewProvider.cs" />
+    <Compile Include="Services\MarkdownConverterService.cs" />
+    <Compile Include="Services\TempFileService.cs" />
+    <Compile Include="ViewModels\ObjectTreeViewModel.cs" />
+    <Compile Include="ViewModels\MarkdownEditorViewModel.cs" />
+    <Compile Include="ViewModels\MarkdownDetailsViewModel.cs" />
+    <Compile Include="Converters\InvertedBooleanToVisibilityConverter.cs" />
+    <Compile Include="Views\ObjectTreeControl.xaml.cs">
+      <DependentUpon>ObjectTreeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MarkdownEditorWithTreeControl.xaml.cs">
+      <DependentUpon>MarkdownEditorWithTreeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LiveMarkdownEditor.xaml.cs">
+      <DependentUpon>LiveMarkdownEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MarkdownDetailsTabView.xaml.cs">
+      <DependentUpon>MarkdownDetailsTabView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="Views\ObjectTreeControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MarkdownEditorWithTreeControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LiveMarkdownEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MarkdownDetailsTabView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+  <!-- Ресурсы EasyMDE -->
+  <ItemGroup>
+    <None Include="Resources\EasyMDE\Editor.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
